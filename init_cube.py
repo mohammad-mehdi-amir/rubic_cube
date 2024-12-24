@@ -1,27 +1,37 @@
+import random
 class Cube:
-    def __init__(self, state: dict):
+    def __init__(self, state: dict={
+    "U": [
+        ['U', 'U', 'U'],['U', 'U', 'U'],['U', 'U', 'U']],
+    "D": [
+        ['D', 'D', 'D'],['D', 'D', 'D'],['D', 'D', 'D']],
+    "F": [
+        ['F', 'F', 'F'],['F', 'F', 'F'],['F', 'F', 'F']],
+    "B": [
+        ['B', 'B', 'B'],['B', 'B', 'B'],['B', 'B', 'B']],
+    "L": [
+        ['L', 'L', 'L'],['L', 'L', 'L'],['L', 'L', 'L']],
+    "R": [
+        ['R', 'R', 'R'],['R', 'R', 'R'],['R', 'R', 'R']]
+}):
         self.cube = state
-        self.code=self.code(self.cube)
+        self.code_id=self.code()
         self.goal_state_id="UUUUUUUUULLLLLLLLLFFFFFFFFFRRRRRRRRRBBBBBBBBBDDDDDDDDD"
+        self.moves = [
+            ("Rotate_U", True), ("Rotate_U", False),
+            ("Rotate_L", True), ("Rotate_L", False),
+            ("Rotate_F", True), ("Rotate_F", False),
+            ("Rotate_R", True), ("Rotate_R", False),
+            ("Rotate_B", True), ("Rotate_B", False),
+            ("Rotate_D", True), ("Rotate_D", False),
+        ]
     def code(self):
         state_id = ""
         for face in ["U", "L", "F", "R", "B", "D"]:
             for row in self.cube[face]:
                 state_id += "".join(map(str, row))
         return state_id
-    def decode(self, state_id: str):
-        faces = ["U", "L", "F", "R", "B", "D"]
-        face_size = 3 
-        cube = {}
-        
-        index = 0
-        for face in faces:
-            self.cube[face] = []
-            for _ in range(face_size):
-                row = list(state_id[index:index + face_size])
-                self.cube[face].append(row)
-                index += face_size
-        return  cube
+  
     
     def rotate_face_clockwise(self, face):
         self.cube[face] = [list(row) for row in zip(*self.cube[face][::-1])]
@@ -159,4 +169,12 @@ class Cube:
             return True
         else:
             return False
+        
+    def rando_moves(self,number : int):
+        for _ in range(number):
+           ch=random.choice(self.moves)
+           print(ch)
+           getattr(self,f'{ch[0]}')(ch[1]) 
+        
+        
        
