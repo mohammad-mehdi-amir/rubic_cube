@@ -1,6 +1,7 @@
 from copy import deepcopy
 from init_cube import Cube
 from collections import deque
+import time
 class RubikSolver:
     def __init__(self, initial_cube):
         
@@ -50,6 +51,7 @@ class RubikSolverBFS:
         self.initial_cube = initial_cube
         self.goal_state = initial_cube.goal_state_id
         self.number_of_cheked_node=0
+        self.start_time = time.time()
         
 
     def solve(self):
@@ -66,7 +68,13 @@ class RubikSolverBFS:
             visited.add(state_id)
 
             if cube.is_solved():
-                return path
+               
+                formatted_solution = []
+                for move, direction in path:
+                    formatted_solution.append(move.split("_")[1] + ("'" if not direction else ""))
+                print("--- %s seconds ---" % round((time.time() - self.start_time), 4))
+                return " ".join(formatted_solution)
+                
 
             for move, direction in self.initial_cube.moves:
                 new_cube = Cube(deepcopy(cube.cube))

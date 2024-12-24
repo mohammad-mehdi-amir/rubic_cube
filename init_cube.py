@@ -1,22 +1,16 @@
 import random
 class Cube:
     def __init__(self, state: dict={
-    "U": [
-        ['U', 'U', 'U'],['U', 'U', 'U'],['U', 'U', 'U']],
-    "D": [
-        ['D', 'D', 'D'],['D', 'D', 'D'],['D', 'D', 'D']],
-    "F": [
-        ['F', 'F', 'F'],['F', 'F', 'F'],['F', 'F', 'F']],
-    "B": [
-        ['B', 'B', 'B'],['B', 'B', 'B'],['B', 'B', 'B']],
-    "L": [
-        ['L', 'L', 'L'],['L', 'L', 'L'],['L', 'L', 'L']],
-    "R": [
-        ['R', 'R', 'R'],['R', 'R', 'R'],['R', 'R', 'R']]
-}):
+    "U": [['U', 'U', 'U'],['U', 'U', 'U'],['U', 'U', 'U']],
+    "D": [['D', 'D', 'D'],['D', 'D', 'D'],['D', 'D', 'D']],
+    "F": [['F', 'F', 'F'],['F', 'F', 'F'],['F', 'F', 'F']],
+    "B": [['B', 'B', 'B'],['B', 'B', 'B'],['B', 'B', 'B']],
+    "L": [['L', 'L', 'L'],['L', 'L', 'L'],['L', 'L', 'L']],
+    "R": [['R', 'R', 'R'],['R', 'R', 'R'],['R', 'R', 'R']]},number_of_random_move=3):
         self.cube = state
         self.code_id=self.code()
         self.goal_state_id="UUUUUUUUULLLLLLLLLFFFFFFFFFRRRRRRRRRBBBBBBBBBDDDDDDDDD"
+        self.rando_moves=number_of_random_move
         self.moves = [
             ("Rotate_U", True), ("Rotate_U", False),
             ("Rotate_L", True), ("Rotate_L", False),
@@ -170,8 +164,8 @@ class Cube:
         else:
             return False
         
-    def rando_moves(self,number : int):
-        for _ in range(number):
+    def rando_moves(self):
+        for _ in range(self.rando_moves):
            ch=random.choice(self.moves)
            print(ch)
            getattr(self,f'{ch[0]}')(ch[1]) 
