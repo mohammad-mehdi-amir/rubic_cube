@@ -1,2 +1,3 @@
 .vscode/
-rubic_cube/
+rubic_cube_venv/
+.DS_store/
