@@ -1,3 +1,4 @@
 .vscode/
 rubic_cube_venv/
-.DS_store/
+.DS_store/__pycache__/
+.DS_Store
