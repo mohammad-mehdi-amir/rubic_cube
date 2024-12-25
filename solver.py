@@ -54,7 +54,7 @@ class RubikSolverBFS:
         self.start_time = time.time()
         
 
-    def solve(self):
+    def solverBfs(self):
         queue = deque([(self.initial_cube, [])])
         visited = set()
 

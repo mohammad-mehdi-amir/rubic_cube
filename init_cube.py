@@ -8,9 +8,9 @@ class Cube:
     "L": [['L', 'L', 'L'],['L', 'L', 'L'],['L', 'L', 'L']],
     "R": [['R', 'R', 'R'],['R', 'R', 'R'],['R', 'R', 'R']]},number_of_random_move=3):
         self.cube = state
-        self.code_id=self.code()
+
         self.goal_state_id="UUUUUUUUULLLLLLLLLFFFFFFFFFRRRRRRRRRBBBBBBBBBDDDDDDDDD"
-        self.rando_moves=number_of_random_move
+        self.n_random_moves=number_of_random_move
         self.moves = [
             ("Rotate_U", True), ("Rotate_U", False),
             ("Rotate_L", True), ("Rotate_L", False),
@@ -19,13 +19,32 @@ class Cube:
             ("Rotate_B", True), ("Rotate_B", False),
             ("Rotate_D", True), ("Rotate_D", False),
         ]
+    def clear(self):
+        self.cube={
+    "U": [['U', 'U', 'U'],['U', 'U', 'U'],['U', 'U', 'U']],
+    "D": [['D', 'D', 'D'],['D', 'D', 'D'],['D', 'D', 'D']],
+    "F": [['F', 'F', 'F'],['F', 'F', 'F'],['F', 'F', 'F']],
+    "B": [['B', 'B', 'B'],['B', 'B', 'B'],['B', 'B', 'B']],
+    "L": [['L', 'L', 'L'],['L', 'L', 'L'],['L', 'L', 'L']],
+    "R": [['R', 'R', 'R'],['R', 'R', 'R'],['R', 'R', 'R']]}
     def code(self):
         state_id = ""
         for face in ["U", "L", "F", "R", "B", "D"]:
             for row in self.cube[face]:
                 state_id += "".join(map(str, row))
         return state_id
-  
+    
+    def decode(self, state_id: str):
+        faces = ["U", "L", "F", "R", "B", "D"]
+        face_size = 3  # چون هر سطح 3x3 است
+        self.cube = {}
+        index = 0
+        for face in faces:
+            self.cube[face] = []
+            for _ in range(face_size):
+                row = list(state_id[index:index + face_size])
+                self.cube[face].append(row)
+                index += face_size
     
     def rotate_face_clockwise(self, face):
         self.cube[face] = [list(row) for row in zip(*self.cube[face][::-1])]
@@ -164,8 +183,8 @@ class Cube:
         else:
             return False
         
-    def rando_moves(self):
-        for _ in range(self.rando_moves):
+    def random_moves(self):
+        for _ in range(self.n_random_moves):
            ch=random.choice(self.moves)
            print(ch)
            getattr(self,f'{ch[0]}')(ch[1]) 
